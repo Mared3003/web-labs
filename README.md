@@ -1,1 +1,1 @@
-# web-labs
+# web-practice

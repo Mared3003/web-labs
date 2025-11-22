@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@layer components {
+  .icon { width: 18px; height: 18px; display: block; }
+
+  .icon-btn{
+    border: none; background: transparent; padding: 0;
+    width: 34px; height: 34px; display: grid; place-items: center; border-radius: 8px;
+  }
+  .icon-btn:hover{ background:#f3f4f6 }
+  .icon-btn:focus{ outline:none }
+  .icon-btn:focus-visible{ outline:2px solid #2B77FF; outline-offset:2px }
+
+  .search__input{
+    --icon:16px; --gap:10px;
+    height:32px; border:1px solid #3f3f3f; border-radius:999px;
+    padding-left: calc(var(--gap) + var(--icon) + 8px);
+    padding-right: 12px; outline:none; background-color:#fff;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>") no-repeat var(--gap) 50% / var(--icon) var(--icon);
+  }
+  .search__input::placeholder{ color:#6b6b6b }
+
+  /* карточка и элементы (минимум — остальное можно делать Tailwind-утилитами) */
+  .card__fav{
+    position:absolute; top:8px; right:8px;
+    width:24px; height:24px; padding:0; border:none; background:#0000; cursor:pointer;
+    display:grid; place-items:center;
+  }
+}

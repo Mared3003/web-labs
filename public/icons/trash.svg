@@ -1,0 +1,42 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="64"
+    height="64"
+    viewBox="0 0 64 64"
+>
+  <!-- Контур мусорки -->
+  <rect
+    x="16"
+    y="20"
+    width="32"
+    height="34"
+    rx="3"
+    ry="3"
+    fill="white"
+    stroke="black"
+    stroke-width="2"
+  />
+  
+  <!-- Крышка -->
+  <rect
+    x="14"
+    y="16"
+    width="36"
+    height="4"
+    fill="black"
+  />
+
+  <!-- Ручка крышки -->
+  <rect
+    x="26"
+    y="10"
+    width="12"
+    height="4"
+    fill="black"
+  />
+
+  <!-- Вертикальные линии внутри -->
+  <line x1="24" y1="24" x2="24" y2="50" stroke="black" stroke-width="2" />
+  <line x1="32" y1="24" x2="32" y2="50" stroke="black" stroke-width="2" />
+  <line x1="40" y1="24" x2="40" y2="50" stroke="black" stroke-width="2" />
+</svg>
