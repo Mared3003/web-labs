@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from '@/features/add-to-cart'
 import { Button } from '@/shared/ui/button'
-import { getProductById, type Product } from '@/entities/product'
+import { getProductById, useProductStore, type Product } from '@/entities/product'
 
 type DetailedCartItem = Product & { qty: number }
 
@@ -10,7 +10,8 @@ const formatCurrency = (value: number) => `${value.toLocaleString('ru-RU')} ₽`
 
 export default function CartPage() {
   const { items, remove, clear, increment, decrement, setQuantity } = useCart()
-  const [favorites, setFavorites] = useState<Record<string, boolean>>({})
+  const favorites = useProductStore((state) => state.favorites)
+  const toggleFavorite = useProductStore((state) => state.toggleFavorite)
 
   const detailedItems = useMemo<DetailedCartItem[]>(() => {
     return items
@@ -150,12 +151,7 @@ export default function CartPage() {
                           className={`flex h-9 w-9 items-center justify-center rounded-lg border transition ${
                             isFavorite ? 'bg-rose-50 border-rose-200' : 'bg-white hover:bg-gray-50'
                           }`}
-                          onClick={() =>
-                            setFavorites((prev) => {
-                              const current = prev[item.id] ?? false
-                              return { ...prev, [item.id]: !current }
-                            })
-                          }
+                          onClick={() => toggleFavorite(item.id)}
                           aria-label="Добавить в избранное"
                         >
                           <img

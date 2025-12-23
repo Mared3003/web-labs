@@ -1,29 +1,22 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { allProducts } from '@/entities/product'
+import { MIN_SEARCH_QUERY_LENGTH, useProductStore } from '@/entities/product'
 import { useCart } from '@/features/add-to-cart'
 
-const MIN_QUERY_LENGTH = 2
-
 export function SearchBar() {
-  const [query, setQuery] = useState('')
   const [isOpen, setIsOpen] = useState(false)
-  const [favorites, setFavorites] = useState<Record<string, boolean>>({})
   const wrapperRef = useRef<HTMLDivElement>(null)
-
+  const query = useProductStore((state) => state.searchQuery)
+  const setQuery = useProductStore((state) => state.setSearchQuery)
+  const searchProducts = useProductStore((state) => state.searchProducts)
+  const favorites = useProductStore((state) => state.favorites)
+  const toggleFavorite = useProductStore((state) => state.toggleFavorite)
   const { add, remove, has } = useCart()
 
-  const normalizedQuery = query.trim().toLowerCase()
-  const results = useMemo(() => {
-    if (normalizedQuery.length < MIN_QUERY_LENGTH) {
-      return []
-    }
-    return allProducts.filter((product) =>
-      product.title.toLowerCase().includes(normalizedQuery)
-    )
-  }, [normalizedQuery])
+  const results = useMemo(() => searchProducts(query), [searchProducts, query])
+  const normalizedQuery = query.trim()
 
   useEffect(() => {
-    setIsOpen(normalizedQuery.length >= MIN_QUERY_LENGTH)
+    setIsOpen(normalizedQuery.length >= MIN_SEARCH_QUERY_LENGTH)
   }, [normalizedQuery])
 
   useEffect(() => {
@@ -48,10 +41,6 @@ export function SearchBar() {
     }
   }, [])
 
-  const toggleFavorite = (id: string) => {
-    setFavorites((prev) => ({ ...prev, [id]: !prev[id] }))
-  }
-
   const handleCartToggle = (id: string) => {
     if (has(id)) {
       remove(id)
@@ -67,7 +56,7 @@ export function SearchBar() {
         type="search"
         placeholder="Искать по каталогу..."
         value={query}
-        onFocus={() => setIsOpen(normalizedQuery.length >= MIN_QUERY_LENGTH)}
+        onFocus={() => setIsOpen(normalizedQuery.length >= MIN_SEARCH_QUERY_LENGTH)}
         onChange={(event) => setQuery(event.target.value)}
       />
 
